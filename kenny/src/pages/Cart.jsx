@@ -5,6 +5,11 @@ import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import StripeCheckout from 'react-stripe-checkout';
+import { userRequest } from "../requestMethods";
+import { useNavigate } from "react-router-dom";
+
+const KEY = process.env.REACT_APP_STRIPE
 
 const Container = styled.div``;
 
@@ -18,31 +23,6 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const Top = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-`;
-
-const TopButton = styled.button`
-  padding: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  border: ${(props) => props.type === "filled" && "none"};
-  background-color: ${(props) =>
-    props.type === "filled" ? "black" : "transparent"};
-  color: ${(props) => props.type === "filled" && "white"};
-`;
-
-const TopTexts = styled.div`
-  ${mobile({ display: "none" })}
-`;
-const TopText = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-  margin: 0px 10px;
-`;
 
 const Bottom = styled.div`
   display: flex;
@@ -149,9 +129,31 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
-  const cart = useSelector((state) => state.cart)
-;
+  const cart = useSelector((state) => state.cart);
+  const [stripeToken, setStripeToken] = useState(null);
+  const history = useNavigate();
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
   
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post('/checkout/payment', {
+        tokenId: stripeToken.id, 
+        amount: cart.total * 100,
+      });
+      history.push('/success', {
+        stripeData: res.data,
+        products: cart,
+      })
+      } catch (error) {
+        
+      }
+    };
+    stripeToken && cart.total >= 1 && makeRequest();
+  }, [stripeToken, cart.total, history])
+
   return (
     <Container>
       <Navbar />
@@ -194,7 +196,17 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Button>
+            <StripeCheckout
+              name='kenny'
+              image="https://avatars.githubusercontent.com/u/99840213?v=4"
+              billingAddress
+              description={`Total amount due: $${cart.total}`}
+              amount={cart.total*100}
+              token={onToken}
+              stripeKey={KEY}>
+            </StripeCheckout>
+            </Button>
             <Button>CONTINUE SHOPPING</Button>
           </Summary>
         </Bottom>

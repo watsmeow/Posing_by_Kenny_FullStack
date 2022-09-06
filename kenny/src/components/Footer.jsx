@@ -1,7 +1,6 @@
 import { Instagram } from "@material-ui/icons";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -11,16 +10,6 @@ const Container = styled.div`
   color: white;
   ${mobile({ flexDirection: "column" })}
 `;
-
-const Left = styled.div`
-  display: flex;
-  flex-direction: column;
-  lign-items: center;
-  padding: 20px;
-  padding-left: 10rem;
-  color: white;
-`;
-
 
 const SocialContainer = styled.div`
   display: flex;
@@ -54,7 +43,9 @@ const Footer = () => {
       <a 
       href="https://www.instagram.com/posing_by_kenny/?hl=en"
       style={linkStyle}
-      target='_blank'>
+      target='_blank'
+      rel="noreferrer"
+      >
 
 
         <SocialContainer>
