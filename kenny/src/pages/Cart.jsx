@@ -44,6 +44,7 @@ const Product = styled.div`
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+  margin-bottom: 2rem;
 `;
 
 const Image = styled.img`
@@ -89,12 +90,6 @@ const ProductPrice = styled.div`
   ${mobile({ marginBottom: "20px" })}
 `;
 
-const Hr = styled.hr`
-  background-color: #eee;
-  border: none;
-  height: 1px;
-`;
-
 const Summary = styled.div`
   flex: 1;
   border: 0.5px solid lightgray;
@@ -128,7 +123,15 @@ const Button = styled.button`
   margin-top: .5rem;
 `;
 
+
+
 const Cart = () => {
+  const stripeStyle = {
+    width: '100%',
+    color: 'white',
+    fontweight: '600',
+    margintop: '.5rem',
+  }
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const history = useNavigate();
@@ -184,7 +187,7 @@ const Cart = () => {
                 </PriceDetail>
               </Product>
             ))}
-            <Hr />
+
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
@@ -196,8 +199,8 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <Button>
             <StripeCheckout
+              style={stripeStyle}
               name='kenny'
               image="https://avatars.githubusercontent.com/u/99840213?v=4"
               billingAddress
@@ -206,7 +209,6 @@ const Cart = () => {
               token={onToken}
               stripeKey={KEY}>
             </StripeCheckout>
-            </Button>
             <Button>CONTINUE SHOPPING</Button>
           </Summary>
         </Bottom>
