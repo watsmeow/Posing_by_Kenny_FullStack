@@ -1,5 +1,5 @@
 # Posing_by_Kenny_FullStack
-A React front end. With an Express back end. And Stripe integration for customer payments. It's a MERN full stack e-commerce website for a bodybuilding posing coach. Uses a Mongo database to house the products, and will include an admin panel so that the site owner can review review and other site related stats. This build is in-progress.
+A React front end. With an Express back end. And Stripe integration for customer payments. It's a MERN full stack e-commerce website for a bodybuilding posing coach. Uses a Mongo database to house the products, and will include an admin panel so that the site owner can review review earnings and other site related stats. This build is in-progress.
 
 ![KennyFS2](https://user-images.githubusercontent.com/99840213/189162297-341304c8-56fd-44d8-b543-3cd7daf7e2fe.JPG)
 ![KennyFS3](https://user-images.githubusercontent.com/99840213/189162294-201819b6-818f-481e-b7ac-f0e076297fca.JPG)
